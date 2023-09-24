@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 
 public class ProdutosDAO {
-    
-    Connection conn;
+    conectaDAO conect = new conectaDAO();
+    Connection conn = conect.connectDB();
     PreparedStatement st;
     ResultSet rs;
     
@@ -28,7 +28,7 @@ public class ProdutosDAO {
         int status;
         
         try{
-            st = conn.prepareStatement("insert into filmes (nome, valor, status) values(?,?,?)");
+            st = conn.prepareStatement("insert into produtos (nome, valor, status) values(?,?,?)");
             st.setString(1,produto.getNome());
             st.setInt(2,produto.getValor());
             st.setString(3, produto.getStatus());
@@ -43,12 +43,12 @@ public class ProdutosDAO {
     
     
     
-    public void listaProdutos(ProdutosDTO produto){
-        
+    public void listaProdutos(){
+        ProdutosDTO produto = new ProdutosDTO();
         
         try{
             if(ListaProdutos.Listar().isEmpty()){
-                st = conn.prepareStatement("select id, nome, valor, status from plano_de_contas");
+                st = conn.prepareStatement("select id, nome, valor, status from produtos");
                 rs = st.executeQuery();
                 while(rs.next()){
                     produto = new ProdutosDTO();

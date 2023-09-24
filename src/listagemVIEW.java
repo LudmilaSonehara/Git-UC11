@@ -208,7 +208,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
     
-    conectaDAO conect = new conectaDAO();
+    ProdutosDAO prod = new ProdutosDAO();
     
     private void listarProdutos(){
         try {
@@ -236,12 +236,14 @@ public class listagemVIEW extends javax.swing.JFrame {
     public void MostraTela(cadastroVIEW telainicial){
          this.telaI = telainicial;
          setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-         atualizar();
+         listarProdutos();
+         prod.listaProdutos();
+         listarProdutos();
          setVisible(true);
      }
     
     
-    private final String[] colunas = {"Id", "Nome", "Valor", "Status"};
+   /* private final String[] colunas = {"Id", "Nome", "Valor", "Status"};
     
      public void atualizar(){
         
@@ -265,6 +267,6 @@ public class listagemVIEW extends javax.swing.JFrame {
         }
         
         
-    }
+    }*/
     
 }
