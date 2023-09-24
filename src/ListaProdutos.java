@@ -13,19 +13,19 @@ import java.util.List;
  */
 public class ListaProdutos {
     
-    private static final List<ProdutosDTO> lista = new ArrayList<>();
+    private static final List<ProdutosDTO> listagem = new ArrayList<>();
     
     public static List<ProdutosDTO> Listar(){
-        return lista;
+        return listagem;
     
     }
     
     public static void Adicionar(ProdutosDTO produto){
-        lista.add(produto);
+        listagem.add(produto);
     }
     
     public static void limpar(){
-        lista.clear();
+        listagem.clear();
     }
     
 }

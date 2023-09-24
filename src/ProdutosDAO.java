@@ -21,7 +21,7 @@ public class ProdutosDAO {
     Connection conn;
     PreparedStatement st;
     ResultSet rs;
-    ArrayList<ProdutosDTO> listagem = new ArrayList<>();
+    
     
     public int cadastrarProduto (ProdutosDTO produto){
         
@@ -33,7 +33,7 @@ public class ProdutosDAO {
             st.setInt(2,produto.getValor());
             st.setString(3, produto.getStatus());
             status = st.executeUpdate();
-            listagem.add(produto);
+            ListaProdutos.Adicionar(produto);
             return status;
         }catch(SQLException ex){
             return ex.getErrorCode();
@@ -41,12 +41,33 @@ public class ProdutosDAO {
         
     }
     
-    public ArrayList<ProdutosDTO> listarProdutos(){
+    
+    
+    public void listaProdutos(ProdutosDTO produto){
         
-        return listagem;
+        
+        try{
+            if(ListaProdutos.Listar().isEmpty()){
+                st = conn.prepareStatement("select id, nome, valor, status from plano_de_contas");
+                rs = st.executeQuery();
+                while(rs.next()){
+                    produto = new ProdutosDTO();
+                    produto.setId(rs.getInt("id"));
+                    produto.setNome(rs.getString("nome"));
+                    produto.setValor(rs.getInt("valor"));
+                    produto.setStatus(rs.getString("status"));
+                    ListaProdutos.Adicionar(produto);
+                    
+                }
+                
+            }
+            
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, "Deu algo errado em listar, meu chapa: "+ex.getMessage());
+                
+            }
+    
     }
-    
-    
     
         
 }

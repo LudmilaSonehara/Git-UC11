@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -143,7 +144,7 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         String id = id_produto_venda.getText();
-        conectaDAO conect = new conectaDAO();
+        
         ProdutosDAO produtosdao = new ProdutosDAO();
         
         //produtosdao.venderProduto(Integer.parseInt(id));
@@ -206,15 +207,16 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
-
+    
+    conectaDAO conect = new conectaDAO();
+    
     private void listarProdutos(){
         try {
-            ProdutosDAO produtosdao = new ProdutosDAO();
             
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
             
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
+            List<ProdutosDTO> listagem = ListaProdutos.Listar();
             
             for(int i = 0; i < listagem.size(); i++){
                 model.addRow(new Object[]{
@@ -248,7 +250,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         ResultSet rs = null;
         DefaultTableModel tabelaModelo = new DefaultTableModel(colunas, 0);
         try{
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/leilao", "root", "14728360Meub@nco");
+            conn = conect.connectDB();
             st = conn.prepareStatement("select id, nome, valor, status from produtos");
             rs = st.executeQuery();
             while(rs.next()){
