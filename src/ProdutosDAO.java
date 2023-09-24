@@ -36,8 +36,10 @@ public class ProdutosDAO {
             st.setString(4, produto.getStatus());
             status = st.executeUpdate();
             ListaProdutos.Adicionar(produto);
+            JOptionPane.showMessageDialog(null, "O produto foi cadastrado com sucesso");
             return status;
         }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Houve um erro no cadastro do produto:\n"+ex.getErrorCode());
             return ex.getErrorCode();
         }
         
