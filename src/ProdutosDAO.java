@@ -28,10 +28,12 @@ public class ProdutosDAO {
         int status;
         
         try{
-            st = conn.prepareStatement("insert into produtos (nome, valor, status) values(?,?,?)");
-            st.setString(1,produto.getNome());
-            st.setInt(2,produto.getValor());
-            st.setString(3, produto.getStatus());
+            st = conn.prepareStatement("insert into produtos (id, nome, valor, status) values(?,?,?,?)");
+            
+            st.setInt(1,produto.getId());
+            st.setString(2,produto.getNome());
+            st.setInt(3, produto.getValor());
+            st.setString(4, produto.getStatus());
             status = st.executeUpdate();
             ListaProdutos.Adicionar(produto);
             return status;
