@@ -1,5 +1,11 @@
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -222,4 +228,41 @@ public class listagemVIEW extends javax.swing.JFrame {
         }
     
     }
+    
+    private cadastroVIEW telaI;
+    
+    public void MostraTela(cadastroVIEW telainicial){
+         this.telaI = telainicial;
+         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+         atualizar();
+         setVisible(true);
+     }
+    
+    
+    private final String[] colunas = {"Id", "Nome", "Valor", "Status"};
+    
+     public void atualizar(){
+        
+        Connection conn = null;
+        PreparedStatement st;
+        ResultSet rs = null;
+        DefaultTableModel tabelaModelo = new DefaultTableModel(colunas, 0);
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/leilao", "root", "14728360Meub@nco");
+            st = conn.prepareStatement("select id, nome, valor, status from produtos");
+            rs = st.executeQuery();
+            while(rs.next()){
+                String id = String.valueOf(rs.getString("id"));
+                String[] linha = {id, rs.getString("nome"), rs.getString("valor"), rs.getString("status")};
+                tabelaModelo.addRow(linha);
+            }
+            listaProdutos.setModel(tabelaModelo);
+            conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Deu errado aqui, meu chapa: "+e.getMessage());
+        }
+        
+        
+    }
+    
 }
