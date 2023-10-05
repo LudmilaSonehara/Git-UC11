@@ -73,5 +73,37 @@ public class ProdutosDAO {
     
     }
     
+    public void vendeID(int ID){
+        try{    
+            st = conn.prepareStatement("select id from produtos where id = ?");
+            st.setInt(1, ID);
+            rs = st.executeQuery();
+            int contagem = 0;
+            for(ProdutosDTO p : ListaProdutos.Listar()){
+                
+                if(p.getId() == ID){
+                  contagem++;
+                  if(p.getStatus().equals("Vendido")){
+                      JOptionPane.showMessageDialog(null, "O produto já foi vendido!");
+                  }
+                  
+                  else{
+                      p.setStatus("Vendido");
+                      JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
+                  }
+                
+                }
+                
+            }
+            if(contagem == 0){
+                JOptionPane.showMessageDialog(null, "Produto não registrado");
+            }
+        }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, "Deu algo errado em listar, meu chapa: "+ex.getMessage());
+               
+        }
+        
+    }
+    
         
 }
